@@ -1,73 +1,93 @@
-# React + TypeScript + Vite
+# ♿ React App com Acessibilidade usando axe-core
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto é um aplicativo **React** configurado com o **axe-core**,
+uma ferramenta usada para identificar automaticamente problemas de
+acessibilidade durante o desenvolvimento.\
+O objetivo é garantir que a aplicação siga boas práticas de
+**Acessibilidade Web (A11y)** e seja mais inclusiva.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologias utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   React
+-   Vite
+-   @axe-core/react
+-   TypeScript
 
-## React Compiler
+## ♿ O que é o axe-core?
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+O **axe-core** é uma engine de verificação de acessibilidade
+desenvolvida pela Deque Systems.\
+Ele ajuda a identificar problemas seguindo recomendações como:
 
-## Expanding the ESLint configuration
+-   WCAG 2.1\
+-   Acessibilidade geral da Web\
+-   Boas práticas A11y
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Com a integração ao React, ele inspeciona automaticamente a renderização
+dos componentes e reporta problemas diretamente no console.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📦 Instalação
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+``` bash
+pnpm add @axe-core/react
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠 Configuração
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+O axe deve rodar somente em **modo de desenvolvimento** para evitar
+perda de performance em produção.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Exemplo (main.jsx / index.js):
+
+``` ts
+if (import.meta.env.MODE === "development") {
+  import('@axe-core/react').then(({ default: axe }) => {
+    import('react').then(React =>
+      import('react-dom').then(ReactDOM => {
+        axe(React, ReactDOM, 1000);
+      })
+    );
+  });
+}
 ```
+
+## ▶️ Como executar o projeto
+
+``` bash
+pnpm install
+pnpm run dev
+```
+
+Abra no navegador:
+
+    http://localhost:5173
+
+## 🔍 Visualizando problemas de acessibilidade
+
+Para ver os alertas:
+
+1.  Abra o DevTools do navegador\
+2.  Acesse a aba *Console*\
+3.  O axe exibirá:
+    -   Descrição do erro\
+    -   Severidade\
+    -   Trecho do DOM afetado\
+    -   Regra violada (WCAG)\
+    -   Sugestões de correção
+
+## ✔️ Benefícios do axe-core
+
+-   Detecta falhas não perceptíveis visualmente\
+-   Ajuda a seguir WCAG desde o início\
+-   Reduz retrabalho\
+-   Melhora qualidade e acessibilidade\
+-   É rápido e fácil de integrar
+
+## 🧩 Boas práticas adicionais de acessibilidade (A11y)
+
+-   Incluir `alt` em imagens
+-   Garantir contraste adequado\
+-   Validar navegação via teclado\
+-   Manter hierarquia de headings\
+-   Usar ARIA somente quando necessário
+
