@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-size: border-box;
+}
+
+body, input, button, textarea, select {
+  font-family: Roboto, sans-serif;
+}
+
+body {
+  background-color: #121214;
+  
+}
